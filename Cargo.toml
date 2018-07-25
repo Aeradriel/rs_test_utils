@@ -1,6 +1,6 @@
 [package]
 name = "test_utils"
-version = "0.1.0"
+version = "0.1.1"
 description = "Utility functions to run rust tests."
 authors = ["Thibaut Roche <thibaut.roche.perso@gmail.com>"]
 license = "MIT"
