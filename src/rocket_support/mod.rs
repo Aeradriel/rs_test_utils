@@ -1,5 +1,5 @@
 //! This module includes several functions to help you test your code
-//! that uses Rocket. It assumes you have defined a `ROCKET_TEST_DATABSE_URL`
+//! that uses Rocket. It assumes you have defined a `ROCKET_TEST_DATABASE_URL`
 //! environment variable (can be in a .env file if you have enabled the `dotenv`
 //! feature).
 
@@ -24,7 +24,7 @@ pub fn init_pool(database_url: &str) -> PgPool {
 }
 
 /// Returns a connection to the database (specified through the
-/// `ROCKET_TEST_DATABSE_URL`) environment variable.
+/// `ROCKET_TEST_DATABASE_URL`) environment variable.
 /// The connection will directly hit the database as it is not
 /// wrapped in a transaction.
 pub fn rocket_connection_without_transaction() -> PgConnection {

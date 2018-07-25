@@ -16,3 +16,6 @@ lazy_static = {version = "1.0.2", optional = true}
 default = ["postgres", "dotenv", "rocket_support"]
 postgres = ["diesel"]
 rocket_support = ["rocket", "lazy_static", "diesel"]
+
+[package.metadata.docs.rs]
+all-features = true
