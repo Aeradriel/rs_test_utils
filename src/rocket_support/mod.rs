@@ -70,7 +70,7 @@ lazy_static! {
 // If you do not want to run a test synchronously, just do not retrieve the mutex.
 //
 // [`routes`]: https://api.rocket.rs/rocket_codegen/index.html#procedural-macros
-pub fn init_rocket<T, U, V, W>(
+pub fn init_rocket_and_clean_tables<T, U, V, W>(
     routes: Vec<Route>,
     tables_to_clean: Vec<T>,
 ) -> (Client, MutexGuard<'static, ()>)
@@ -97,3 +97,21 @@ where
         guard,
     )
 }
+
+pub fn init_rocket(
+    routes: Vec<Route>
+) -> (Client, MutexGuard<'static, ()>) {
+    let guard = match G_MUTEX.lock() {
+        Ok(guard) => guard,
+        Err(poisoned) => poisoned.into_inner(),
+    };
+
+    dotenv().ok();
+
+    let pool = init_pool(&env::var("ROCKET_TEST_DATABASE_URL").expect("No test database url set"));
+    let rocket_instance = ignite().manage(pool).mount("/", routes);
+
+    (
+        Client::new(rocket_instance).expect("Could not create rocket client"),
+        guard,
+    )}
